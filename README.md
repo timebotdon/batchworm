@@ -7,7 +7,9 @@ Upon execution, this PoC first exploits the Invoke-MS16-032 EoP (@fuzzysecurity)
 ## Configuration
 IP addresses and target subnet can be updated in main.bat
 
-
 ## Building
 1. Adjust "TargetName" and "SourceFiles0" in build/batchworm.SED and build/pl.SED accordingly to where the directory was downloaded to.
 2. Run build-batchworm.bat. The executable will be outputed to the release folder.
+
+## Removal
+1. Run remove-batchworm.bat
