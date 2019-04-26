@@ -21,5 +21,11 @@ IP addresses and target subnet can be updated in main.bat
 1. Adjust "TargetName" and "SourceFiles0" in build/batchworm.SED and build/pl.SED accordingly to where the directory was downloaded to.
 2. Run build-batchworm.bat. The executable will be outputed to the release folder.
 
+## IOC Artifacts
+1. %USERPROFILE%/appdata/tmp
+2. C:\Windows\temp\dapw
+3. C:\Windows\temp\main.bat
+
 ## Removal
-1. Run remove-batchworm.bat
+1. Run remove-batchworm.bat to totally remove the artifacts.
+2. If some files/registry items are still present in the system, remove as referenced in remove-batchworm.bat.
