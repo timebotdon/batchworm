@@ -2,7 +2,7 @@
 Worm PoC on batch
 
 ## Description
-Upon execution, this PoC first exploits the Invoke-MS16-032 EoP (@fuzzysecurity) vulnerability of Windows 7 x64 machines - this can be swapped out for other exploits or run without one. Gaining SYSTEM/Administrator privileges, the batch script attempts to trick domain users to visiting their local IT administrator - this is done by adjusting the IP to a static 169 private address. Credentials are dumped to a file when the Admin logs in to readjust the IP configuration. The worm uses said credentials to propagate itself through 3 methods listed below.
+Upon execution, this PoC first exploits the Invoke-MS16-032 EoP (@fuzzysecurity) vulnerability of Windows 7 x64 machines - this can be swapped out for other exploits or run without one. Gaining SYSTEM/Administrator privileges, the batch script attempts to trick domain users to visiting their local IT administrator - this is done by adjusting the IP to a static 169 private address. Credentials are dumped to a file when the Admin logs in to readjust the IP configuration. The worm uses said credentials to propagate itself through 3 methods listed below. In this PoC, a "pwned.txt" file is left behind.
 
 ## Spreading Methods
 ### Method 1 - Netstat
