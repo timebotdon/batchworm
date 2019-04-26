@@ -22,9 +22,11 @@ IP addresses and target subnet can be updated in main.bat
 2. Run build-batchworm.bat. The executable will be outputed to the release folder.
 
 ## IOC Artifacts
-1. %USERPROFILE%/appdata/tmp
-2. C:\Windows\temp\dapw
-3. C:\Windows\temp\main.bat
+* C:\Windows\Temp\IPX*.TMP - Windows IExpress extracted directory
+* C:\Windows\Temp\dapw - dumped domain admin cleartext password
+* C:\Windows\Temp\main.bat - batchworm
+* C:\pwned.txt
+* HKLM\SOFTWARE\Microsoft\isInstalled - batchworm killswitch registry
 
 ## Removal
 1. Run remove-batchworm.bat to totally remove the artifacts.
