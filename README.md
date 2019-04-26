@@ -15,15 +15,18 @@ Pings the entire 0/24 subnet of the current machine for any active hosts before 
 ## Credential Dumping - Windows Credential Editor (WCE)
 WCE is run on the background to dump administrator passwords to "dapw" C:\Windows\temp\dapw
 
+## Persistence - Task Scheduler
+Persistence is done through the task scheduler, though it's not currently implemented yet.
+Commented due to various bugs.
+
 ## Propagation - Net Use
 Administrator credentials is used here to map a shared drive to other hosts found in the above Recon methods. "main.bat" and "dapw" is then copied into the new host.
 
 ## Killswitch
 Searches on the windows registry for "HKLM\SOFTWARE\Microsoft\isInstalled". If it's there, the batchworm will terminate.
 
-## Persistence - Task Scheduler
-Persistence is done through the task scheduler, though it's not currently implemented yet.
-Commented due to various bugs.
+## Remote execution - Windows Management Interface Command (WMIC) 
+Uses the same credential file to execute remotely to other hosts.
 
 # Configuration
 IP addresses and target subnet can be updated in main.bat
