@@ -1,29 +1,29 @@
 # Description
-Upon execution, this PoC first exploits the Invoke-MS16-032 EoP (@fuzzysecurity) vulnerability of Windows 7 x64 machines - can be swapped out for other exploits or run without one (requires admin). Gaining SYSTEM/Administrator privileges, the batch script attempts to trick domain users to visiting their local IT administrator - this is done by adjusting the IP to a static 169 private address. Credentials are dumped to a file when the Admin logs in to readjust the IP configuration. The worm uses said credentials to propagate itself through 3 methods listed below. In this PoC, a "pwned.txt" file is left behind on C root.
+Duct tape batch script worm. Primarily uses IExpress - a Windows file binder - as a means to package and quickly create executables. Upon execution, this PoC first exploits the Invoke-MS16-032 EoP (@fuzzysecurity) vulnerability of Windows 7 x64 machines - can be swapped out for other exploits or removed totally (the batch script requires admin however). Gaining SYSTEM privileges, the worm attempts to trick domain users to visiting their local IT administrator - this is done by disabling their internet connection via adjusting the IP configuration to a static private address. Credentials are dumped to a file when the Admin logs in to reconfigure the IP address. The worm uses said credentials to propagate itself through 3 methods as listed below. In this PoC, a "pwned.txt" file is left behind on C root.
 
 # Methods
 ## Recon
 ### Netstat
-Parses netstat output to find potential hosts connected on port 445 (smb).
+Parses netstat output to find potential hosts connected on port 445 (smb) before propagating.
 
 ### ARP Table
-Uses the cached ARP table to find potential hosts.
+Uses the cached ARP table to find potential hosts before connecting.
 
 ### Ping Sweep
 Pings the entire 0/24 subnet of the current machine for any active hosts before attempting to login on port 445 (smb).
 
 ## Credential Dumping - Windows Credential Editor (WCE)
-WCE is run on the background to dump administrator passwords to "dapw" C:\Windows\temp\dapw
+WCE is run on the background to dump administrator credentials to "dapw" C:\Windows\temp\dapw
 
 ## Persistence - Task Scheduler
 Persistence is done through the task scheduler, though it's not currently implemented yet.
-Commented due to various bugs.
+Commented out due to bugs.
 
 ## Propagation - Net Use
 Administrator credentials is used here to map a shared drive to other hosts found in the above Recon methods. "main.bat" and "dapw" is then copied into the new host.
 
 ## Killswitch
-Searches on the windows registry for "HKLM\SOFTWARE\Microsoft\isInstalled". If it's there, the batchworm will terminate.
+Searches on the windows registry for "HKLM\SOFTWARE\Microsoft\isInstalled". If present, the batchworm will terminate.
 
 ## Remote execution - Windows Management Interface Command (WMIC) 
 Uses the same credential file to execute remotely to other hosts.
