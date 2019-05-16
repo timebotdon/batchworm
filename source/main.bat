@@ -159,7 +159,7 @@ REM :seq3
 	exit /b 0
 
 
-:prop_sub
+:prop_subnet
 	:: Method 1 - Find and propagate to targets on same subnet
 	setlocal enabledelayedexpansion
 	for /l %%q in (0,1,255) do (
