@@ -12,17 +12,20 @@ Uses the cached ARP table to find potential hosts before connecting.
 ### Ping Sweep
 Pings the entire 0/24 subnet of the current machine for any active hosts before attempting to login on port 445 (smb).
 
-## Credential Dumping - Windows Credential Editor (WCE)
+## Credential Dumping
+### Windows Credential Editor (WCE)
 WCE is run on the background to dump administrator credentials to "dapw" C:\Windows\temp\dapw
 
-## Persistence - Task Scheduler
+## Persistence
+### Task Scheduler
 Persistence is done through the task scheduler.
 
-## Propagation - Net Use
+## Propagation
+### Net Use
 Administrator credentials is used here to map a shared drive to other hosts found in the above Recon methods. "main.bat" and "dapw" is then copied into the new host.
 
 ## Killswitch
-Searches on the windows registry for "HKLM\SOFTWARE\Microsoft\isInstalled". If present, the batchworm will terminate.
+Searches on the windows registry for "HKLM\SOFTWARE\Microsoft\killswitch". If present, the batchworm will terminate.
 
 ## Remote execution - Windows Management Interface Command (WMIC) 
 Uses the same credential file to execute remotely to other hosts.
@@ -41,8 +44,10 @@ IP addresses and target subnet can be updated in main.bat
 * C:\Windows\Temp\dapw - Captured domain admin cleartext credentials.
 * C:\Windows\Temp\main.bat - Batchworm script.
 * C:\pwned.txt - Post-morterm artifact.
+
 ## Registry
 * HKLM\SOFTWARE\Microsoft\isInstalled - Batchworm infection marker.
+
 ## Task schedule
 * Microsoft\Windows\SoftwareProtectionPlatform\PlatformMaintenance - Persistence.
 
