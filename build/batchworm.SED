@@ -24,7 +24,7 @@ SourceFiles=SourceFiles
 InstallPrompt=
 DisplayLicense=
 FinishMessage=
-TargetName=C:\Users\donovan\Desktop\batchworm\release\batchworm.exe
+TargetName=C:\batchworm\release\batchworm.exe
 FriendlyName= 
 AppLaunched=cmd /c run.bat
 PostInstallCmd=<None>
@@ -34,7 +34,7 @@ FILE0="exp.ps1"
 FILE1="pl.exe"
 FILE2="run.bat"
 [SourceFiles]
-SourceFiles0=C:\Users\donovan\Desktop\batchworm\source\
+SourceFiles0=C:\batchworm\source\
 [SourceFiles0]
 %FILE0%=
 %FILE1%=
