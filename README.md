@@ -1,5 +1,7 @@
 # Description
-Duct tape batch script worm. Primarily uses IExpress - a Windows file binder - as a means to package and quickly create executables. Upon execution, this PoC first exploits the Invoke-MS16-032 EoP (@fuzzysecurity) vulnerability of Windows 7 x64 machines - can be swapped out for other exploits or removed totally (the batch script requires admin however). Gaining SYSTEM privileges, the worm attempts to trick domain users to visiting their local IT administrator - this is done by disabling their internet connection via adjusting the IP configuration to a static private address. Credentials are dumped to a file when the Admin logs in to reconfigure the IP address. The worm uses said credentials to propagate itself through 3 methods as listed below. In this PoC, a "pwned.txt" file is left behind on C root.
+Duct tape batch script worm. Primarily uses IExpress - a Windows file binder - as a means to package and quickly create executables. Upon execution, this PoC first exploits the Invoke-MS16-032 EoP (@fuzzysecurity) vulnerability of Windows 7 x64 machines - can be swapped out for other exploits or removed totally (the batch script requires admin however).
+Gaining SYSTEM privileges, the worm attempts to trick domain users to visiting their local IT administrator - this is done by disabling their internet connection via adjusting the IP configuration to a static private address.
+Credentials are dumped to a file when the Admin logs in to reconfigure the IP address. The worm uses said credentials to propagate itself through 3 methods as listed below. In this PoC, a "pwned.txt" file is left behind on C root.
 
 # Methods
 ## Recon
