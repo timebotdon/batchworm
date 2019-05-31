@@ -10,3 +10,4 @@ del /f "%ldir%\main.bat"
 del /f C:\pwned.txt
 for /f "delims=" %%a in ('"dir /b C:\Windows\Temp\IPX*.TMP"') do rmdir /s /q "C:\Windows\Temp\%%a"
 for /f "delims=" %%b in ('"dir /b %temp%\IPX*"') do rmdir /s /q "%temp%\%%b"
+for /f "delims=" %%c in ('"dir /b %userprofile%\AppData\Local\Temp\IPX*.TMP"') do rmdir /s /q "%userprofile%\AppData\Local\Temp\%%c"
