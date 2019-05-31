@@ -3,39 +3,29 @@ Duct tape batch script worm. Primarily uses IExpress - a Windows file binder - a
 
 # Methods
 ## Recon
-### Netstat
-Parses netstat output to find potential hosts connected on port 445 (smb) before propagating.
+1. Netstat - Parses netstat output to find potential hosts connected on port 445 (smb) before propagating.
+2. ARP Table - Uses the cached ARP table to find potential hosts before connecting.
 
-### ARP Table
-Uses the cached ARP table to find potential hosts before connecting.
-
-### Ping Sweep
-Pings the entire 0/24 subnet of the current machine for any active hosts before attempting to login on port 445 (smb).
+3. Ping Sweep - Pings the entire 0/24 subnet of the current machine for any active hosts before attempting to login on port 445 (smb).
 
 ## Credential Dumping
-### Windows Credential Editor (WCE)
-WCE is run on the background to dump administrator credentials to "dapw" C:\Windows\temp\dapw
+Windows Credential Editor (WCE) - WCE is run on the background to dump administrator credentials to "dapw" C:\Windows\temp\dapw
 
 ## Persistence
-### Task Scheduler
-Persistence is done through the task scheduler.
+Task Scheduler - Persistence is done through the task scheduler.
 
 ## Propagation
-### Net Use
-Administrator credentials is used here to map a shared drive to other hosts found in the above Recon methods. "main.bat" and "dapw" is then copied into the new host.
-
-## Killswitch
-Searches on the windows registry for "HKLM\SOFTWARE\Microsoft\killswitch". If present, the batchworm will terminate.
+Net Use - Administrator credentials is used here to map a shared drive to other hosts found in the above Recon methods. "main.bat" and "dapw" is then copied into the new host.
 
 ## Remote execution - Windows Management Interface Command (WMIC) 
 Uses the same credential file to execute remotely to other hosts.
 
 # Configuration
-IP addresses and target subnet can be updated in main.bat
+IP addresses and target subnet can be updated in main.bat.
 
-# Building
-1. Adjust "TargetName" and "SourceFiles0" in build/batchworm.SED and build/pl.SED accordingly to where the directory was downloaded to.
-2. Run build-batchworm.bat. The executable will be outputed to the release folder.
+## Building
+1. Adjust "TargetName" and "SourceFiles0" in build/batchworm.SED and build/pl.SED accordingly to where the directory was downloaded to. by default, the directory should be set to "C:\batchworm"
+2. Run build-batchworm.bat. The executable will be outputed to "release" folder.
 
 # IOC Artifacts
 ## File system
@@ -50,6 +40,9 @@ IP addresses and target subnet can be updated in main.bat
 
 ## Task schedule
 * Microsoft\Windows\SoftwareProtectionPlatform\PlatformMaintenance - Persistence.
+
+# Prevention (Killswitch)
+The batchworm searches the windows registry for "HKLM\SOFTWARE\Microsoft\killswitch". If present, the batchworm will terminate at startup.
 
 # Removal
 1. Run remove-batchworm.bat to totally remove the artifacts.
