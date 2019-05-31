@@ -16,8 +16,7 @@ Pings the entire 0/24 subnet of the current machine for any active hosts before 
 WCE is run on the background to dump administrator credentials to "dapw" C:\Windows\temp\dapw
 
 ## Persistence - Task Scheduler
-Persistence is done through the task scheduler, though it's not currently implemented yet.
-Commented out due to bugs.
+Persistence is done through the task scheduler.
 
 ## Propagation - Net Use
 Administrator credentials is used here to map a shared drive to other hosts found in the above Recon methods. "main.bat" and "dapw" is then copied into the new host.
@@ -36,11 +35,16 @@ IP addresses and target subnet can be updated in main.bat
 2. Run build-batchworm.bat. The executable will be outputed to the release folder.
 
 # IOC Artifacts
-* C:\Windows\Temp\IPX*.TMP - Windows IExpress extracted directory
-* C:\Windows\Temp\dapw - dumped domain admin cleartext password
-* C:\Windows\Temp\main.bat - batchworm
-* C:\pwned.txt
-* HKLM\SOFTWARE\Microsoft\isInstalled - batchworm killswitch registry
+## File system
+* C:\Users\[user]\Appdata\Local\Temp\IPX*.TMP - Windows IExpress extracted directory in %TEMP%.
+* C:\Windows\Temp\IPX*.TMP - Windows IExpress extracted directory in Windows temp.
+* C:\Windows\Temp\dapw - Captured domain admin cleartext credentials.
+* C:\Windows\Temp\main.bat - Batchworm script.
+* C:\pwned.txt - Post-morterm artifact.
+## Registry
+* HKLM\SOFTWARE\Microsoft\isInstalled - Batchworm infection marker.
+## Task schedule
+* Microsoft\Windows\SoftwareProtectionPlatform\PlatformMaintenance - Persistence.
 
 # Removal
 1. Run remove-batchworm.bat to totally remove the artifacts.
